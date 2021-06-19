@@ -1,6 +1,5 @@
 package Pages;
 
-import Steps.hooks;
 import Utilities.SeleniumBase;
 import Utilities.Utility;
 import org.junit.Assert;
@@ -15,12 +14,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class searchPage {
-    private WebDriverWait wait;
     static Logger logger = Logger.getLogger(searchPage.class.getName());
+    SeleniumBase base;
 
     public searchPage(WebDriver webDriver) {
-        wait = new WebDriverWait(webDriver, Integer.parseInt(Utility.getProperty("explicitTime")));
+
         PageFactory.initElements(webDriver, this);
+        base = new SeleniumBase(webDriver);
     }
 
     @FindBy(xpath = " .//a[contains(text(),'Close')]")
@@ -42,8 +42,8 @@ public class searchPage {
     List<WebElement> advanceSearchOptionsEle;
 
     public void closeLoginPopup() {
-        wait.until(ExpectedConditions.elementToBeClickable(loginCloseIcon));
-        loginCloseIcon.click();
+        SeleniumBase.waitForClick(loginCloseIcon);
+       SeleniumBase.Click(loginCloseIcon);
     }
 
     public void searchAProduct(String search) {
