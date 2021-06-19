@@ -9,8 +9,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.logging.Logger;
+
 public class trackOrderPage {
     private WebDriverWait wait;
+    static Logger logger = Logger.getLogger(trackOrderPage.class.getName());
+
     public trackOrderPage(WebDriver webDriver) {
 
         wait = new WebDriverWait(webDriver, Integer.parseInt(Utility.getProperty("explicitTime")));
@@ -50,7 +54,7 @@ public class trackOrderPage {
         phoneNumberEle.isEnabled();
     }
 
-    public void validateOrderNumberVisisble() {
+    public void validateOrderNumberVisible() {
         orderNumberEle.isEnabled();
     }
 
@@ -71,5 +75,6 @@ public class trackOrderPage {
     public void validateSingOffAvailable() {
         Assert.assertTrue("Sign up option is available in track order page",
                 signUpLink.isEnabled());
+        logger.info("Sign Up option is available");
     }
 }

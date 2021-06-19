@@ -109,11 +109,11 @@
                             </jsonFiles> <!-- optional, defaults to outputDirectory if not specified -->
                             <classificationDirectory>${project.build.directory}/cucumber-reports
                             </classificationDirectory>
-                            <classificationFiles> <!-- supports wildcard or name pattern -->
-                                <param>sample.properties</param>
-                                <param>other.properties</param>
-                            </classificationFiles>
-                            <parallelTesting>false</parallelTesting> <!-- optional, set true to fail build on test failures -->
+<!--                            <classificationFiles> &lt;!&ndash; supports wildcard or name pattern &ndash;&gt;-->
+<!--                                <param>sample.properties</param>-->
+<!--                                <param>other.properties</param>-->
+<!--                            </classificationFiles>-->
+                            <parallelTesting>true</parallelTesting> <!-- optional, set true to fail build on test failures -->
                             <checkBuildResult>false</checkBuildResult>
                         </configuration>
                     </execution>

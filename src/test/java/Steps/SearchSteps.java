@@ -8,12 +8,12 @@ public class SearchSteps {
     searchPage search = new searchPage(hooks.driver);
 
     @Given("^user navigates to the urbanLadder application$")
-    public void navigateToHomePage() throws Throwable {
+    public void navigateToHomePage() {
         hooks.driver.get(Utility.getProperty("url"));
     }
 
     @And("^I close the Sign or Sign up pop-up$")
-    public void iCloseTheSignOrSignUpPopUp() throws InterruptedException {
+    public void iCloseTheSignOrSignUpPopUp() {
         search.closeLoginPopup();
     }
 

@@ -1,6 +1,5 @@
 package Steps;
 
-import Utilities.DataHelper;
 import Utilities.DriverFactory;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
@@ -10,27 +9,22 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class hooks {
 
     public static WebDriver driver;
-    public List<HashMap<String, String>> datamap;
-    static Logger logger = Logger.getLogger(SearchSteps.class.getName());
-    DriverFactory obj = new DriverFactory();
+    static Logger logger = Logger.getLogger(hooks.class.getName());
 
     public hooks(){
-
     }
 
     @Before
     public void setUp() {
-        datamap = DataHelper.data(System.getProperty("user.dir") + "src/test/resources/data.xlsx", "Sheet1");
-        logger.info("Instantiating chrome driver");
+        logger.info("Instantiating chrome driver@#@$@@@");
         driver = DriverFactory.get_driver_instance();
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
@@ -50,7 +44,7 @@ public class hooks {
     }
 
     @After
-    public void shutDown() throws InterruptedException {
+    public void shutDown() {
         driver.manage().deleteAllCookies();
         driver.quit();
     }
