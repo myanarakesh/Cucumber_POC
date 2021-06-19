@@ -22,7 +22,7 @@ public class hooks {
 
     @Before
     public void setUp() {
-        logger.info("Instantiating chrome driver@#@$@@@");
+        logger.info("Instantiating chrome driver");
         driver = DriverFactory.get_driver_instance();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
