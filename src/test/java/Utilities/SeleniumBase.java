@@ -1,11 +1,10 @@
 package Utilities;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
-//import org.apache.commons.lang3.StringUtils;
+import Pages.searchPage;
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -13,10 +12,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -27,17 +22,29 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SeleniumBase {
 
-    private static final int ELEMENT_WAIT_TIMEOUT_IN_SECONDS = 10;
-    private static final int PAGE_WAIT_TIMEOUT_IN_SECONDS = 60;
     private static WebDriverWait wait;
-    static WebDriver driver;
-    final static Actions builder = new Actions(driver);
-
+    public static WebDriver driver;
+    static Logger logger = Logger.getLogger(SeleniumBase.class.getName());
 
     public SeleniumBase(WebDriver webDriver) {
         driver = webDriver;
         PageFactory.initElements(driver, this);
         wait = new WebDriverWait(webDriver, Integer.parseInt(Utility.getProperty("explicitTime")));
+    }
+
+    public static void Clear(final WebElement element){
+        SeleniumBase.isElementEnable(element);
+        element.clear();
+    }
+
+    public static void sendKeys(WebElement element,String input){
+        SeleniumBase.isElementEnable(element);
+        element.sendKeys(input);
+    }
+
+    public static void submit(WebElement element){
+        SeleniumBase.isElementEnable(element);
+        element.submit();
     }
 
     public static void Click(final WebElement element) {
@@ -74,10 +81,10 @@ public class SeleniumBase {
         }
     }
 
-    public static String isAnyTextPresent(final WebElement element) {
+    public static String getElementText(final WebElement element) {
         SeleniumBase.isElementEnable(element);
-        final String text = element.getText();
-        return text;
+        logger.info(element.getText());
+        return element.getText();
     }
 
     public static void waitForClick(WebElement element) {
@@ -102,24 +109,27 @@ public class SeleniumBase {
     }
 
     public static void waitForElementIsInvisible(final By by) {
-        final WebDriverWait wait = new WebDriverWait(driver, ELEMENT_WAIT_TIMEOUT_IN_SECONDS);
         wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 
     public static void mouseover(final WebElement element) {
+        final Actions builder = new Actions(driver);
         builder.moveToElement(element).build().perform();
     }
 
     public static void dragAndDrop(final WebElement element, final int xOffset, final int yOffset) {
+        final Actions builder = new Actions(driver);
         final Action dragAndDrop = builder.clickAndHold(element).moveByOffset(xOffset, yOffset).release().build();
         dragAndDrop.perform();
     }
 
     public static void doubleClick(final WebElement element) {
+        final Actions builder = new Actions(driver);
         builder.doubleClick(element).build().perform();
     }
 
     public static void rightClick(final WebElement element) {
+        final Actions builder = new Actions(driver);
         builder.contextClick(element).build().perform();
     }
 
@@ -201,28 +211,20 @@ public class SeleniumBase {
         }
     }
 
-    public static void switchWindow(final String url) throws Throwable {
-        sleep(2000);
-        String currentHandle = null;
-        final Set<String> handles = driver.getWindowHandles();
-        if (handles.size() > 1) {
-            currentHandle = driver.getWindowHandle();
-        }
-        if (currentHandle != null) {
-            for (final String handle : handles) {
-                driver.switchTo().window(handle);
-                if (driver.getCurrentUrl().contains(url) && currentHandle.equals(handle) == false) {
-                    break;
-                }
-            }
-        } else {
-            for (final String handle : handles) {
-                driver.switchTo().window(handle);
-                if (driver.getCurrentUrl().contains(url)) {
-                    break;
-                }
-            }
-        }
+    public static void switchWindowByIndex(int index) {
+        Set<String> handles = driver.getWindowHandles();
+        String handle = (String) (new ArrayList(handles)).get(index);
+        driver.switchTo().window(handle);
+    }
+
+    public static void switchWindowByName(String windowName){
+        driver.switchTo().window(windowName);
+    }
+
+    public static void validateTitle(String lookingFor){
+        if(lookingFor.equalsIgnoreCase("Home"))
+            Assert.assertEquals(UrbanConst.homePageTitle,driver.getTitle());
+        else if(lookingFor.equalsIgnoreCase("Track Order"))
+            Assert.assertEquals(UrbanConst.trackOrderPageTitle,driver.getTitle());
     }
 }
-
