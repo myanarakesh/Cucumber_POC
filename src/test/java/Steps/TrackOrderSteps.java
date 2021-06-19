@@ -6,40 +6,40 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class TrackOrderSteps {
-    trackOrderPage trackOrderPageobj = new trackOrderPage(hooks.driver);
+    trackOrderPage trackOrderPageObj = new trackOrderPage(hooks.driver);
 
     @When("user clicks on Track Order option")
     public void userClicksOnTrackOrderOption() {
-        trackOrderPageobj.clickOnTrackOrderLink();
+        trackOrderPageObj.clickOnTrackOrderLink();
     }
 
     @Then("user navigate to Track Order page")
     public void userNavigateToTrackOrderPage() {
-        trackOrderPageobj.verifyTrackOrderPage();
+        trackOrderPageObj.verifyTrackOrderPage();
     }
 
     @And("Verify Phone Number present on Track Order Page")
     public void verifyPhoneNumberPresentOnTrackOrderPage() {
-        trackOrderPageobj.validatePhoneNumberVisible();
+        trackOrderPageObj.validatePhoneNumberVisible();
     }
 
     @And("Order Number present on Track Order Page")
     public void orderNumberPresentOnTrackOrderPage() {
-        trackOrderPageobj.validateOrderNumberVisisble();
+        trackOrderPageObj.validateOrderNumberVisible();
     }
 
     @When("user clicks on Login to Track your orders button")
     public void userClicksOnLoginToTrackYourOrdersButton() {
-        trackOrderPageobj.clicksOnTrackYourOrder();
+        trackOrderPageObj.clicksOnTrackYourOrder();
     }
 
     @Then("user sees social media option for login")
     public void userSeesSocialMediaOptionForLogin() {
-        trackOrderPageobj.validateSocialMediaLoginToTrack();
+        trackOrderPageObj.validateSocialMediaLoginToTrack();
     }
 
     @Then("Verify Sign Off link available")
     public void verifySignOffLinkAvailable() {
-        trackOrderPageobj.validateSingOffAvailable();
+        trackOrderPageObj.validateSingOffAvailable();
     }
 }

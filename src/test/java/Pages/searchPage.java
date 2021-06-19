@@ -1,5 +1,6 @@
 package Pages;
 
+import Steps.hooks;
 import Utilities.SeleniumBase;
 import Utilities.Utility;
 import org.junit.Assert;
@@ -11,9 +12,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class searchPage {
     private WebDriverWait wait;
+    static Logger logger = Logger.getLogger(searchPage.class.getName());
 
     public searchPage(WebDriver webDriver) {
         wait = new WebDriverWait(webDriver, Integer.parseInt(Utility.getProperty("explicitTime")));
