@@ -9,8 +9,11 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <cucumberVerions>4.8.1</cucumberVerions>
+        <parallelTesting>false</parallelTesting>
+        <threadCount>1</threadCount>
+<!--        <maven.compiler.source>8</maven.compiler.source>-->
+<!--        <maven.compiler.target>8</maven.compiler.target>-->
     </properties>
     <dependencies>
         <dependency>
@@ -21,17 +24,17 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-core</artifactId>
-            <version>4.8.1</version>
+            <version>${cucumberVerions}</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
-            <version>4.8.1</version>
+            <version>${cucumberVerions}</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>4.8.1</version>
+            <version>${cucumberVerions}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -62,25 +65,6 @@
             <type>pom</type>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
-<!--        <dependency>-->
-<!--            <groupId>net.masterthought</groupId>-->
-<!--            <artifactId>cucumber-reporting</artifactId>-->
-<!--            <version>5.0.0</version>-->
-<!--        </dependency>-->
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.testng</groupId>-->
-        <!--            <artifactId>testng</artifactId>-->
-        <!--            <version>7.4.0</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>io.cucumber</groupId>-->
-        <!--            <artifactId>cucumber-testng</artifactId>-->
-        <!--            <version>4.8.1</version>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -101,25 +85,19 @@
                             <outputDirectory>target/cucumber-reports/advanced-reports</outputDirectory>
                             <cucumberOutput>target/cucumber-reports/CucumberTestReport.json</cucumberOutput>
                             <buildNumber>1</buildNumber>
-                            <parallelTesting>false</parallelTesting>
+<!--                            <parallelTesting>false</parallelTesting>-->
                             <skip>false</skip>
                             <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
-                            <jsonFiles> <!-- supports wildcard or name pattern -->
+                            <jsonFiles>
                                 <param>**/*.json</param>
-                            </jsonFiles> <!-- optional, defaults to outputDirectory if not specified -->
+                            </jsonFiles>
                             <classificationDirectory>${project.build.directory}/cucumber-reports
                             </classificationDirectory>
-<!--                            <classificationFiles> &lt;!&ndash; supports wildcard or name pattern &ndash;&gt;-->
-<!--                                <param>sample.properties</param>-->
-<!--                                <param>other.properties</param>-->
-<!--                            </classificationFiles>-->
-                            <parallelTesting>true</parallelTesting> <!-- optional, set true to fail build on test failures -->
                             <checkBuildResult>false</checkBuildResult>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <!--            plugin for Junit-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -127,32 +105,11 @@
                 <configuration>
                     <skipTests>false</skipTests>
                     <parallel>methods</parallel>
-                    <threadCount>1</threadCount>
-                    <perCoreThreadCount>false</perCoreThreadCount>
+                    <threadCount>${threadCount}</threadCount>
+                    <perCoreThreadCount>${parallelTesting}</perCoreThreadCount>
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
-
-            <!--            plugin for testng-->
-            <!--            <plugin>-->
-            <!--                <groupId>org.apache.maven.plugins</groupId>-->
-            <!--                <artifactId>maven-surefire-plugin</artifactId>-->
-            <!--                <version>3.0.0-M5</version>-->
-            <!--                <configuration>-->
-            <!--                    <suiteXmlFiles>-->
-            <!--                        <suiteXmlFile>TestNG.xml</suiteXmlFile>-->
-            <!--                    </suiteXmlFiles>-->
-            <!--                    <parallel>classes</parallel>-->
-            <!--                    <threadCount>2</threadCount>-->
-            <!--                    <perCoreThreadCount>false</perCoreThreadCount>-->
-            <!--                    <properties>-->
-            <!--                        <property>-->
-            <!--                            <name>dataproviderthreadcount</name>-->
-            <!--                            <value>2</value>-->
-            <!--                        </property>-->
-            <!--                    </properties>-->
-            <!--                </configuration>-->
-            <!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

@@ -36,4 +36,14 @@ public class SearchSteps {
     public void iClickOnSearchIconInSearchBar() {
         search.clickOnSearchIcon();
     }
+
+    @And("I see search result page of (.+)")
+    public void iSeeSearchResultPageOfSearchAProduct(String product) {
+        search.validateSearchPage(product);
+    }
+
+    @And("I validate {string} page")
+    public void iValidatePage(String page) {
+        search.validateTitleOfPage(page);
+    }
 }

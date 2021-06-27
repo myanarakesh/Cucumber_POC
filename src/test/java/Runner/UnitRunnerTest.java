@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/Features",
-//        tags = {"@signin"},
+//        tags = {"@temp"},
         glue = {"Steps"},
         plugin = ("json:target/cucumber-reports/CucumberTestReport.json"),
         monochrome = true

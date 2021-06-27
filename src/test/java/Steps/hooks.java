@@ -1,6 +1,7 @@
 package Steps;
 
 import Utilities.DriverFactory;
+import Utilities.Utility;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -25,7 +26,7 @@ public class hooks {
         logger.info("Instantiating chrome driver");
         driver = DriverFactory.get_driver_instance();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(Integer.parseInt(Utility.getProperty("implicitTime")), TimeUnit.SECONDS);
     }
 
     @After
@@ -36,7 +37,7 @@ public class hooks {
             file.mkdir();
             try {
                 final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-                FileUtils.copyFile(scrFile, new File(screenshotPath+"scr1.png"));
+                FileUtils.copyFile(scrFile, new File(screenshotPath+"screenshot.png"));
             } catch (final Exception e) {
                 e.printStackTrace();
             }

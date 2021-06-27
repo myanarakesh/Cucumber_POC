@@ -1,24 +1,24 @@
 package Pages;
 
 import Utilities.DriverFactory;
-import Utilities.Utility;
+import Utilities.SeleniumBase;
+import Utilities.UrbanConst;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.logging.Logger;
 
 public class trackOrderPage {
-    private WebDriverWait wait;
+
     static Logger logger = Logger.getLogger(trackOrderPage.class.getName());
+    SeleniumBase base;
 
     public trackOrderPage(WebDriver webDriver) {
-
-        wait = new WebDriverWait(webDriver, Integer.parseInt(Utility.getProperty("explicitTime")));
         PageFactory.initElements(webDriver, this);
+        base = new SeleniumBase(webDriver);
     }
 
     @FindBy(xpath = ".//a[contains(text(),'Track Order')]")
@@ -44,37 +44,35 @@ public class trackOrderPage {
 
     DriverFactory obj = new DriverFactory();
 
-    String trackOrderTitile = "Track Order | Urbanladder";
-
     public void clickOnTrackOrderLink() {
-        trackOrderHyperLink.click();
+        SeleniumBase.Click(trackOrderHyperLink);
     }
 
     public void validatePhoneNumberVisible() {
-        phoneNumberEle.isEnabled();
+        SeleniumBase.isElementEnable(phoneNumberEle);
     }
 
     public void validateOrderNumberVisible() {
-        orderNumberEle.isEnabled();
+        SeleniumBase.isElementEnable(orderNumberEle);
     }
 
     public void verifyTrackOrderPage() {
         Assert.assertTrue("Unable to load track order page",
-                obj.driver.getTitle().equals(trackOrderTitile));
+                SeleniumBase.driver.getTitle().trim().equals(UrbanConst.trackOrderPageTitle));
     }
 
     public void clicksOnTrackYourOrder() {
-        loginToTrackBtn.submit();
+        SeleniumBase.submit(loginToTrackBtn);
     }
 
     public void validateSocialMediaLoginToTrack() {
         Assert.assertTrue("Facebook or Google login option is missing",
-                facebookLoginBtn.isEnabled() && googleLoginBtn.isEnabled());
+                SeleniumBase.isElementEnable(facebookLoginBtn) && SeleniumBase.isElementEnable(googleLoginBtn));
     }
 
     public void validateSingOffAvailable() {
         Assert.assertTrue("Sign up option is available in track order page",
-                signUpLink.isEnabled());
+                SeleniumBase.isElementEnable(signUpLink));
         logger.info("Sign Up option is available");
     }
 }

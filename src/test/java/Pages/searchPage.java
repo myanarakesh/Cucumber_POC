@@ -1,26 +1,21 @@
 package Pages;
 
-import Steps.hooks;
 import Utilities.SeleniumBase;
-import Utilities.Utility;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.List;
 import java.util.logging.Logger;
 
 public class searchPage {
-    private WebDriverWait wait;
     static Logger logger = Logger.getLogger(searchPage.class.getName());
+    SeleniumBase base;
 
     public searchPage(WebDriver webDriver) {
-        wait = new WebDriverWait(webDriver, Integer.parseInt(Utility.getProperty("explicitTime")));
         PageFactory.initElements(webDriver, this);
+        base = new SeleniumBase(webDriver);
     }
 
     @FindBy(xpath = " .//a[contains(text(),'Close')]")
@@ -41,26 +36,39 @@ public class searchPage {
     @FindBy(xpath = ".//strong[@class='tt-highlight']")
     List<WebElement> advanceSearchOptionsEle;
 
+    @FindBy(className = "withsubtext")
+    WebElement searchResultHeaderEle;
+
+    @FindBy(tagName = "title")
+    WebElement titleOfPage;
+
     public void closeLoginPopup() {
-        wait.until(ExpectedConditions.elementToBeClickable(loginCloseIcon));
-        loginCloseIcon.click();
+        SeleniumBase.waitForClick(loginCloseIcon);
+        SeleniumBase.Click(loginCloseIcon);
     }
 
     public void searchAProduct(String search) {
-        searchInput.clear();
-        searchInput.sendKeys(search);
+        SeleniumBase.Clear(searchInput);
+        SeleniumBase.sendKeys(searchInput,search);
     }
 
     public void clickOnSearchIcon() {
-        seachIcon.click();
+        SeleniumBase.Click(seachIcon);
+    }
+
+    public void validateTitleOfPage(String titleOfPage){
+        SeleniumBase.validateTitle(titleOfPage);
+    }
+
+    public void validateSearchPage(String lookingFor){
+        Assert.assertEquals("Search Results For '"+lookingFor+"'",searchResultHeaderEle.getText().trim());
     }
 
     public void verifySearchResult(String verifySearchResult) {
 
         System.out.println("List Of Search result of " + verifySearchResult);
         for (WebElement result : searchResultName1) {
-            SeleniumBase.isAnyTextPresent(result);
-            System.out.println(result.getText());
+            SeleniumBase.getElementText(result);
         }
 
         for (int i = 0; i < searchResultName1.size(); i++) {
