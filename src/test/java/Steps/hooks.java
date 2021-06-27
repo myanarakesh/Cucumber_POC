@@ -10,6 +10,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -30,17 +31,22 @@ public class hooks {
     }
 
     @After
-    public void tearDown(Scenario scenario) {
+    public void tearDown(Scenario scenario) throws IOException {
+        File file;
         if (scenario.isFailed()) {
             String screenshotPath = System.getProperty("user.dir") + "\\target\\screenshots\\"+scenario.getName()+"\\";
-            File file = new File(screenshotPath);
+            file = new File(screenshotPath);
             file.mkdir();
             try {
                 final File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(scrFile, new File(screenshotPath+"screenshot.png"));
+
             } catch (final Exception e) {
                 e.printStackTrace();
             }
+            String failedScreenShot = screenshotPath+"screenshot.png";
+            String url = "<img src="+failedScreenShot+" alt='failed screenshot'>";
+            scenario.embed(url.getBytes(),"png", "Click Here To See Screenshot");
         }
     }
 
