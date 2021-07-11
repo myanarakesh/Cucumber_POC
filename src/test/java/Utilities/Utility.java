@@ -1,13 +1,6 @@
 package Utilities;
 
-import com.sun.javafx.fxml.PropertyNotFoundException;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.*;
-import java.util.Enumeration;
 import java.util.Properties;
 
 public class Utility {
